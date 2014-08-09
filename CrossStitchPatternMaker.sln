@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossStitchPatternMaker", "CrossStitchPatternMaker\CrossStitchPatternMaker.csproj", "{46EFD2BA-6038-4D14-B79F-53ACEB3E9147}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossStitchPatternMaker.WinForms", "CrossStitchPatternMaker.WinForms\CrossStitchPatternMaker.WinForms.csproj", "{55B6A1C7-DAAE-4D95-BC45-C592E7F58E18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +15,10 @@ Global
 		{46EFD2BA-6038-4D14-B79F-53ACEB3E9147}.Debug|x86.Build.0 = Debug|x86
 		{46EFD2BA-6038-4D14-B79F-53ACEB3E9147}.Release|x86.ActiveCfg = Release|x86
 		{46EFD2BA-6038-4D14-B79F-53ACEB3E9147}.Release|x86.Build.0 = Release|x86
+		{55B6A1C7-DAAE-4D95-BC45-C592E7F58E18}.Debug|x86.ActiveCfg = Debug|x86
+		{55B6A1C7-DAAE-4D95-BC45-C592E7F58E18}.Debug|x86.Build.0 = Debug|x86
+		{55B6A1C7-DAAE-4D95-BC45-C592E7F58E18}.Release|x86.ActiveCfg = Release|x86
+		{55B6A1C7-DAAE-4D95-BC45-C592E7F58E18}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
