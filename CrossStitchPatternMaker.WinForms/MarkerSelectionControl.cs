@@ -60,6 +60,12 @@ namespace CrossStitchPatternMaker.WinForms
             this.mListBoxMarkers.Items.AddRange(
                 lRepository.EnumerateAll().Cast<object>().ToArray());
             this.SelectedMarker = lSelectedMarker;
+            
+            if ((this.mListBoxMarkers.SelectedIndex < 0) &&
+                (this.mListBoxMarkers.Items.Count > 0))
+            {
+                this.mListBoxMarkers.SelectedIndex = 0;
+            }
         }
 
         private void ListBoxMarkers_DrawItem(object sender, DrawItemEventArgs e)
@@ -73,9 +79,22 @@ namespace CrossStitchPatternMaker.WinForms
 
             using (var lForeBrush = new SolidBrush(lForeColor))
             using (var lBackBrush = new SolidBrush(lBackColor))
+            using (var lBorderPen = new Pen(Color.Black, 2.0f))
             {
-                e.Graphics.FillRectangle(lBackBrush, e.Bounds);
-                e.Graphics.DrawString(lMarker.Name, e.Font, lForeBrush, e.Bounds, StringFormats.MiddleCenter);
+                var lImageBounds = new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Height, e.Bounds.Height);
+                var lTextBounds = new Rectangle(lImageBounds.Right, lImageBounds.Y, e.Bounds.Right - lImageBounds.Right, lImageBounds.Height);
+
+                e.Graphics.FillRectangle(SystemBrushes.Window, lImageBounds);
+                e.Graphics.FillRectangle(lBackBrush, lTextBounds);
+             
+                lImageBounds.Inflate(-2, -2);
+                e.Graphics.DrawImage(
+                    lMarker.Image, 
+                    lImageBounds.X, lImageBounds.Y, 
+                    lImageBounds.Width, lImageBounds.Height);
+                e.Graphics.DrawRectangle(lBorderPen, lImageBounds);
+
+                e.Graphics.DrawString(lMarker.Name, e.Font, lForeBrush, lTextBounds, StringFormats.LeftCenter);
             }
         }
 
