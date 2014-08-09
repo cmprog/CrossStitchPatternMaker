@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mMainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.mToolStripMenuItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mToolStripMenuItemFileNew = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,6 +42,8 @@
             this.mToolStripMenuItemEditClear = new System.Windows.Forms.ToolStripMenuItem();
             this.mStitchPatternControl = new CrossStitchPatternMaker.WinForms.StitchPatternControl();
             this.mMarkerSelectionControl = new CrossStitchPatternMaker.WinForms.MarkerSelectionControl();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mToolStripMenuItemFilePrint = new System.Windows.Forms.ToolStripMenuItem();
             this.mMainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,6 +67,8 @@
             this.mToolStripMenuItemFileSave,
             this.mToolStripMenuItemFileSaveAs,
             this.mToolStripMenuItemFileSeparator2,
+            this.mToolStripMenuItemFilePrint,
+            this.toolStripSeparator1,
             this.mToolStripMenuItemFileExit});
             this.mToolStripMenuItemFile.Name = "mToolStripMenuItemFile";
             this.mToolStripMenuItemFile.Size = new System.Drawing.Size(37, 20);
@@ -76,7 +81,7 @@
             this.mToolStripMenuItemFileNew.ShortcutKeyDisplayString = "Ctrl+N";
             this.mToolStripMenuItemFileNew.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.mToolStripMenuItemFileNew.Size = new System.Drawing.Size(196, 22);
-            this.mToolStripMenuItemFileNew.Text = "New Pattern";
+            this.mToolStripMenuItemFileNew.Text = "&New Pattern";
             this.mToolStripMenuItemFileNew.Click += new System.EventHandler(this.ToolStripMenuItemFileNew_Click);
             // 
             // mToolStripMenuItemFileOpen
@@ -85,7 +90,7 @@
             this.mToolStripMenuItemFileOpen.ShortcutKeyDisplayString = "Ctrl+O";
             this.mToolStripMenuItemFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.mToolStripMenuItemFileOpen.Size = new System.Drawing.Size(196, 22);
-            this.mToolStripMenuItemFileOpen.Text = "Open Pattern...";
+            this.mToolStripMenuItemFileOpen.Text = "&Open Pattern...";
             this.mToolStripMenuItemFileOpen.Click += new System.EventHandler(this.ToolStripMenuItemOpen_Click);
             // 
             // mToolStripMenuItemFileSeparator1
@@ -99,7 +104,7 @@
             this.mToolStripMenuItemFileSave.ShortcutKeyDisplayString = "Ctrl+S";
             this.mToolStripMenuItemFileSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.mToolStripMenuItemFileSave.Size = new System.Drawing.Size(196, 22);
-            this.mToolStripMenuItemFileSave.Text = "Save";
+            this.mToolStripMenuItemFileSave.Text = "&Save";
             this.mToolStripMenuItemFileSave.Click += new System.EventHandler(this.ToolStripMenuItemFileSave_Click);
             // 
             // mToolStripMenuItemFileSaveAs
@@ -109,7 +114,7 @@
             this.mToolStripMenuItemFileSaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
             this.mToolStripMenuItemFileSaveAs.Size = new System.Drawing.Size(196, 22);
-            this.mToolStripMenuItemFileSaveAs.Text = "Save As...";
+            this.mToolStripMenuItemFileSaveAs.Text = "Save &As...";
             this.mToolStripMenuItemFileSaveAs.Click += new System.EventHandler(this.ToolStripMenuItemFileSaveAs_Click);
             // 
             // mToolStripMenuItemFileSeparator2
@@ -122,7 +127,7 @@
             this.mToolStripMenuItemFileExit.Name = "mToolStripMenuItemFileExit";
             this.mToolStripMenuItemFileExit.ShortcutKeyDisplayString = "Alt+F4";
             this.mToolStripMenuItemFileExit.Size = new System.Drawing.Size(196, 22);
-            this.mToolStripMenuItemFileExit.Text = "Exit";
+            this.mToolStripMenuItemFileExit.Text = "E&xit";
             this.mToolStripMenuItemFileExit.Click += new System.EventHandler(this.ToolStripMenuItemFileExit_Click);
             // 
             // mToolStripMenuItemEdit
@@ -162,6 +167,20 @@
             this.mMarkerSelectionControl.TabIndex = 2;
             this.mMarkerSelectionControl.SelectedMarkerChanged += new System.EventHandler(this.MarkerSelectionControl_SelectedMarkerChanged);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(193, 6);
+            // 
+            // mToolStripMenuItemFilePrint
+            // 
+            this.mToolStripMenuItemFilePrint.Name = "mToolStripMenuItemFilePrint";
+            this.mToolStripMenuItemFilePrint.ShortcutKeyDisplayString = "Ctrl+P";
+            this.mToolStripMenuItemFilePrint.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.mToolStripMenuItemFilePrint.Size = new System.Drawing.Size(196, 22);
+            this.mToolStripMenuItemFilePrint.Text = "&Print...";
+            this.mToolStripMenuItemFilePrint.Click += new System.EventHandler(this.ToolStripMenuItemFilePrint_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -170,9 +189,9 @@
             this.Controls.Add(this.mStitchPatternControl);
             this.Controls.Add(this.mMarkerSelectionControl);
             this.Controls.Add(this.mMainMenuStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mMainMenuStrip;
             this.Name = "MainForm";
-            this.ShowIcon = false;
             this.Text = "Cross Stitch Pattern Maker";
             this.mMainMenuStrip.ResumeLayout(false);
             this.mMainMenuStrip.PerformLayout();
@@ -196,6 +215,8 @@
         private MarkerSelectionControl mMarkerSelectionControl;
         private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemEdit;
         private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemEditClear;
+        private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemFilePrint;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

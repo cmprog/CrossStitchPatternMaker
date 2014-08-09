@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Printing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -23,10 +25,18 @@ namespace CrossStitchPatternMaker.WinForms
             this.ActivePattern = new CrossStitchPattern();
 
             var lApplicationDataDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var lCrossStitchDirectoryPath = Path.Combine(lApplicationDataDirectoryPath, "CrossStitchPatternMaker");
+            var lCrossStitchDirectoryPath = Path.Combine(lApplicationDataDirectoryPath, "Cross Stitch Pattern Maker");
             var lMarkerDirectoryPath = Path.Combine(lCrossStitchDirectoryPath, "Markers");
             Directory.CreateDirectory(lMarkerDirectoryPath);
             this.mMarkerSelectionControl.Repository = new StitchMarkerRepository(lMarkerDirectoryPath);
+        }
+
+        public MainForm(string filePath)
+            : this()
+        {
+            this.ActivePattern = CrossStitchPattern.CreateFromFile(
+                filePath, this.mMarkerSelectionControl.Repository);
+            this.CurrentFilePath = filePath;
         }
 
         #endregion
@@ -111,6 +121,7 @@ namespace CrossStitchPatternMaker.WinForms
         private void ToolStripMenuItemFile_DropDownOpening(object sender, EventArgs e)
         {
             this.mToolStripMenuItemFileSave.Enabled = !string.IsNullOrWhiteSpace(this.CurrentFilePath);
+            this.mToolStripMenuItemFilePrint.Enabled = (this.ActivePattern != null);
         }
 
         private void ToolStripMenuItemFileSave_Click(object sender, EventArgs e)
@@ -128,6 +139,25 @@ namespace CrossStitchPatternMaker.WinForms
             if (this.ActivePattern == null) return;
             this.ActivePattern.Grid.Clear();
             this.mStitchPatternControl.Invalidate();
+        }
+
+        private void ToolStripMenuItemFilePrint_Click(object sender, EventArgs e)
+        {
+            using (var lPrintDocument = new PrintDocument())
+            {
+                lPrintDocument.PrintPage += this.PrintDocument_PrintPage;
+                lPrintDocument.DefaultPageSettings.Margins.Top = 50; // hundredths of an inch
+                lPrintDocument.DefaultPageSettings.Margins.Bottom = 50;
+                lPrintDocument.DefaultPageSettings.Margins.Right = 50;
+                lPrintDocument.DefaultPageSettings.Margins.Left = 50;
+                lPrintDocument.Print();
+            }
+        }
+
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            this.mStitchPatternControl.DrawGrid(e.Graphics, e.MarginBounds);
+            e.HasMorePages = false;
         }
 
         #endregion

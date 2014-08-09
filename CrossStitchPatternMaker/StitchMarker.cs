@@ -92,7 +92,7 @@ namespace CrossStitchPatternMaker
             this.Image.Save(lPatternImageFilePath, ImageFormat.Png);
 
             var lMetaDataFilePath = Path.Combine(directoryPath, "meta.smpat");
-            using (var lFileStream = new FileStream(lMetaDataFilePath, FileMode.Open, FileAccess.Write, FileShare.None))
+            using (var lFileStream = new FileStream(lMetaDataFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
             using (var lStreamWriter = new StreamWriter(lFileStream))
             {
                 lStreamWriter.WriteLine(this.mName);

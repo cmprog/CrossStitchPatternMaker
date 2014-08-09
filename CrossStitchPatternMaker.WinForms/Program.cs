@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace CrossStitchPatternMaker.WinForms
@@ -15,7 +13,9 @@ namespace CrossStitchPatternMaker.WinForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            var lMainForm = (args.Length == 0) ? new MainForm() : new MainForm(args[0]);
+            Application.Run(lMainForm);
         }
     }
 }

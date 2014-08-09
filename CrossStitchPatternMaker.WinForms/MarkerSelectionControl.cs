@@ -56,9 +56,16 @@ namespace CrossStitchPatternMaker.WinForms
             var lRepository = this.Repository;
             if (lRepository == null) return;
 
+            var lMarkers = lRepository.EnumerateAll();
+            if (!string.IsNullOrWhiteSpace(this.mTextBoxSearch.Text))
+            {
+                var lSearchText = this.mTextBoxSearch.Text.Trim();
+                lMarkers = lMarkers.Where(x => x.Name.IndexOf(lSearchText, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+            lMarkers = lMarkers.OrderBy(x => x.Name);
+
             var lSelectedMarker = this.SelectedMarker;
-            this.mListBoxMarkers.Items.AddRange(
-                lRepository.EnumerateAll().Cast<object>().ToArray());
+            this.mListBoxMarkers.Items.AddRange(lMarkers.Cast<object>().ToArray());
             this.SelectedMarker = lSelectedMarker;
             
             if ((this.mListBoxMarkers.SelectedIndex < 0) &&
@@ -102,6 +109,11 @@ namespace CrossStitchPatternMaker.WinForms
         {
             var lSelectedMarkerChanged = this.SelectedMarkerChanged;
             if (lSelectedMarkerChanged != null) lSelectedMarkerChanged(this, EventArgs.Empty);
+        }
+
+        private void TextBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            this.RefreshAllMarkers();
         }
 
         #endregion

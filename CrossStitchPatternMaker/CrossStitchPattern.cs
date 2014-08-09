@@ -15,7 +15,7 @@ namespace CrossStitchPatternMaker
 
         public CrossStitchPattern()
         {
-            this.mGrid = new CrossStitchGrid(25, 25);
+            this.mGrid = new CrossStitchGrid(70, 70);
         }
 
         #endregion

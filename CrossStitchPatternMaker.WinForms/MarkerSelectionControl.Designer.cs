@@ -72,6 +72,7 @@
             this.mTextBoxSearch.Name = "mTextBoxSearch";
             this.mTextBoxSearch.Size = new System.Drawing.Size(274, 20);
             this.mTextBoxSearch.TabIndex = 0;
+            this.mTextBoxSearch.TextChanged += new System.EventHandler(this.TextBoxSearch_TextChanged);
             // 
             // mGroupBoxMarkers
             // 

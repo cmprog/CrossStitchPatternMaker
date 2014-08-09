@@ -10,8 +10,7 @@ namespace CrossStitchPatternMaker.WinForms
 
         private CrossStitchGrid mGrid;
 
-        private float mCellWidthF;
-        private float mCellHeightF;
+        private float mCellSizeF;
 
         #endregion
 
@@ -59,38 +58,39 @@ namespace CrossStitchPatternMaker.WinForms
             }
             else
             {
-                this.mCellWidthF = (float)(this.ClientRectangle.Width) / this.Grid.Width;
-                this.mCellHeightF = (float)(this.ClientRectangle.Height) / this.Grid.Height;
+                e.Graphics.Clear(Color.White);
 
-                this.DrawMarkers(e);
-                this.DrawGrid(e);
+                this.mCellSizeF = Math.Min(
+                    (float) (this.ClientRectangle.Width)/this.Grid.Width,
+                    (float) (this.ClientRectangle.Height)/this.Grid.Height);
+
+                this.DrawMarkers(e.Graphics, this.ClientRectangle, this.mCellSizeF);
+                this.DrawGrid(e.Graphics, this.ClientRectangle, this.mCellSizeF);
             }
         }
 
-        private void DrawMarkers(PaintEventArgs e)
+        private void DrawMarkers(Graphics g, Rectangle bounds, float cellSizeF)
         {
-            var lClientRectangle = this.ClientRectangle;
-
-            var lCurrentPosition = new PointF(lClientRectangle.Left, lClientRectangle.Top);
+            var lCurrentPosition = new PointF(bounds.Left, bounds.Top);
             for (int lRowIndex = 0; lRowIndex < this.Grid.Height; lRowIndex++)
             {
-                lCurrentPosition.X = lClientRectangle.Left;
+                lCurrentPosition.X = bounds.Left;
 
                 for (int lColumnIndex = 0; lColumnIndex < this.Grid.Width; lColumnIndex++)
                 {
                     var lCell = this.Grid[lRowIndex, lColumnIndex];
                     if ((lCell != null) && (lCell.Marker != null) && (lCell.Marker.Image != null))
                     {
-                        e.Graphics.DrawImage(
+                        g.DrawImage(
                            lCell.Marker.Image,
                            lCurrentPosition.X, lCurrentPosition.Y,
-                           this.mCellWidthF, this.mCellHeightF);
+                           cellSizeF, cellSizeF);
                     }
 
-                    lCurrentPosition.X += this.mCellWidthF;
+                    lCurrentPosition.X += cellSizeF;
                 }
 
-                lCurrentPosition.Y += this.mCellHeightF;
+                lCurrentPosition.Y += cellSizeF;
             }
         }
 
@@ -99,31 +99,33 @@ namespace CrossStitchPatternMaker.WinForms
             base.OnMouseDown(e);
 
             const float lcZeroValueThreshold = 0.001f;
-            if ((Math.Abs(this.mCellWidthF) < lcZeroValueThreshold) ||
-                (Math.Abs(this.mCellHeightF) < lcZeroValueThreshold))
+            if ((Math.Abs(this.mCellSizeF) < lcZeroValueThreshold) ||
+                (Math.Abs(this.mCellSizeF) < lcZeroValueThreshold))
             {
                 return;
             }
 
-            var lIndexX = (int) ((e.X - this.ClientRectangle.Left)/this.mCellWidthF);
-            var lIndexY = (int) ((e.Y - this.ClientRectangle.Top)/this.mCellHeightF);
+            var lIndexX = (int)((e.X - this.ClientRectangle.Left) / this.mCellSizeF);
+            var lIndexY = (int)((e.Y - this.ClientRectangle.Top) / this.mCellSizeF);
 
             this.Grid[lIndexY, lIndexX].Marker = this.ActiveMarker;
             this.Invalidate();
         }
 
-        private void DrawGrid(PaintEventArgs e)
+        private void DrawGrid(Graphics g, Rectangle bounds, float cellSizeF)
         {
-
             const int lcThickLineFrequency = 5;
 
             using (var lThickPen = new Pen(Color.Black, 2.0f))
             using (var lThinPen = new Pen(Color.Black, 1.0f))
             {
                 var lThickLineCounter = 0;
-                float lCurrentY = this.ClientRectangle.Top;
+                float lCurrentY = bounds.Top;
 
-                e.Graphics.DrawLine(lThickPen, this.ClientRectangle.Left, lCurrentY, this.ClientRectangle.Right, lCurrentY);
+                var lGridWidthF = this.Grid.Width*cellSizeF;
+                var lGridHeightF = this.Grid.Height*cellSizeF;
+
+                g.DrawLine(lThickPen, bounds.Left, lCurrentY, bounds.Left + lGridWidthF, lCurrentY);
                 for (int lRowIndex = 0; lRowIndex < this.Grid.Height; lRowIndex++)
                 {
                     var lPen = lThinPen;
@@ -133,14 +135,14 @@ namespace CrossStitchPatternMaker.WinForms
                         lThickLineCounter = 0;
                     }
 
-                    lCurrentY += this.mCellHeightF;
-                    e.Graphics.DrawLine(lPen, this.ClientRectangle.Left, lCurrentY, this.ClientRectangle.Right, lCurrentY);
+                    lCurrentY += cellSizeF;
+                    g.DrawLine(lPen, bounds.Left, lCurrentY, bounds.Left + lGridWidthF, lCurrentY);
                 }
 
                 lThickLineCounter = 0;
-                float lCurrentX = this.ClientRectangle.Left;
+                float lCurrentX = bounds.Left;
 
-                e.Graphics.DrawLine(lThickPen, lCurrentX, this.ClientRectangle.Top, lCurrentX, this.ClientRectangle.Bottom);
+                g.DrawLine(lThickPen, lCurrentX, bounds.Top, lCurrentX, bounds.Top + lGridHeightF);
                 for (int lColumnIndex = 0; lColumnIndex < this.Grid.Width; lColumnIndex++)
                 {
                     var lPen = lThinPen;
@@ -150,10 +152,20 @@ namespace CrossStitchPatternMaker.WinForms
                         lThickLineCounter = 0;
                     }
 
-                    lCurrentX += this.mCellWidthF;
-                    e.Graphics.DrawLine(lPen, lCurrentX, this.ClientRectangle.Top, lCurrentX, this.ClientRectangle.Bottom);
+                    lCurrentX += cellSizeF;
+                    g.DrawLine(lPen, lCurrentX, bounds.Top, lCurrentX, bounds.Top + lGridHeightF);
                 }
             }
+        }
+
+        internal void DrawGrid(Graphics g, Rectangle bounds)
+        {
+            var lCellSizeF = Math.Min(
+                (float) (bounds.Width)/this.Grid.Width,
+                (float) (bounds.Height)/this.Grid.Height);
+
+            this.DrawMarkers(g, bounds, lCellSizeF);
+            this.DrawGrid(g, bounds, lCellSizeF);
         }
 
         #endregion

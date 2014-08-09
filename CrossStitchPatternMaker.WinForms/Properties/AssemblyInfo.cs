@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CrossStitchPatternMaker.WinForms")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Cross Stitch Pattern Maker")]
+[assembly: AssemblyDescription("Creates cross stitch patterns")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CrossStitchPatternMaker.WinForms")]
+[assembly: AssemblyCompany("Morse Coding")]
+[assembly: AssemblyProduct("Cross Stitch Pattern Maker")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
