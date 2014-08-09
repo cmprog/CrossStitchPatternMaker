@@ -47,5 +47,15 @@ namespace CrossStitchPatternMaker
                 lMarker.Dispose();
             }
         }
+
+        public IEnumerable<StitchMarker> EnumerateAll()
+        {
+            foreach (var lDirectoryPath in Directory.EnumerateDirectories(this.mBaseDirectoryPath))
+            {
+                var lDirectoryName = Path.GetFileName(lDirectoryPath);
+                if (lDirectoryName == null) continue;
+                yield return this.Load(Guid.Parse(lDirectoryName));
+            }
+        }
     }
 }

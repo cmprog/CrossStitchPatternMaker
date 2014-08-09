@@ -96,8 +96,8 @@ namespace CrossStitchPatternMaker
             using (var lStreamWriter = new StreamWriter(lFileStream))
             {
                 lStreamWriter.WriteLine(this.mName);
-                lStreamWriter.WriteLine(this.CreatedOnUtc);
-                lStreamWriter.WriteLine(this.ModifiedOnUtc);
+                lStreamWriter.WriteLine(this.CreatedOnUtc.Ticks);
+                lStreamWriter.WriteLine(this.ModifiedOnUtc.Ticks);
             }
         }
 
@@ -112,8 +112,8 @@ namespace CrossStitchPatternMaker
             using (var lStreamReader = new StreamReader(lFileStream, System.Text.Encoding.UTF8))
             {
                 lMarker.mName = lStreamReader.ReadLine();
-                lMarker.CreatedOnUtc = DateTime.Parse(lStreamReader.ReadLine());
-                lMarker.ModifiedOnUtc = DateTime.Parse(lStreamReader.ReadLine());
+                lMarker.CreatedOnUtc = new DateTime(long.Parse(lStreamReader.ReadLine()));
+                lMarker.ModifiedOnUtc = new DateTime(long.Parse(lStreamReader.ReadLine()));
             }
 
             return lMarker;

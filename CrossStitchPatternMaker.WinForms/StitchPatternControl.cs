@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace CrossStitchPatternMaker.WinForms
@@ -13,11 +10,8 @@ namespace CrossStitchPatternMaker.WinForms
 
         private CrossStitchGrid mGrid;
 
-        private readonly StringFormat mStringFormatMiddleCenter = new StringFormat
-            {
-                Alignment = StringAlignment.Center,
-                LineAlignment = StringAlignment.Center,
-            };
+        private float mCellWidthF;
+        private float mCellHeightF;
 
         #endregion
 
@@ -36,7 +30,7 @@ namespace CrossStitchPatternMaker.WinForms
 
         #region Instance Properties ----------------------------------------------------
 
-        public CrossStitchPattern ActivePattern { get; set; }
+        public StitchMarker ActiveMarker { get; set; }
 
         public CrossStitchGrid Grid
         {
@@ -59,25 +53,67 @@ namespace CrossStitchPatternMaker.WinForms
             if (this.Grid == null)
             {
                 e.Graphics.DrawString(
-                    "Load or Create a new pattern to begin", 
-                    this.Font, SystemBrushes.ControlText, 
-                    this.ClientRectangle, this.mStringFormatMiddleCenter);
+                    "Load or Create a new pattern to begin",
+                    this.Font, SystemBrushes.ControlText,
+                    this.ClientRectangle, StringFormats.MiddleCenter);
             }
             else
             {
+                this.mCellWidthF = (float)(this.ClientRectangle.Width) / this.Grid.Width;
+                this.mCellHeightF = (float)(this.ClientRectangle.Height) / this.Grid.Height;
+
+                this.DrawMarkers(e);
                 this.DrawGrid(e);
+            }
+        }
+
+        private void DrawMarkers(PaintEventArgs e)
+        {
+            var lClientRectangle = this.ClientRectangle;
+
+            var lCurrentPosition = new PointF(lClientRectangle.Left, lClientRectangle.Top);
+            for (int lRowIndex = 0; lRowIndex < this.Grid.Height; lRowIndex++)
+            {
+                lCurrentPosition.X = lClientRectangle.Left;
+
+                for (int lColumnIndex = 0; lColumnIndex < this.Grid.Width; lColumnIndex++)
+                {
+                    var lCell = this.Grid[lRowIndex, lColumnIndex];
+                    if ((lCell != null) && (lCell.Marker != null) && (lCell.Marker.Image != null))
+                    {
+                        e.Graphics.DrawImage(
+                           lCell.Marker.Image,
+                           lCurrentPosition.X, lCurrentPosition.Y,
+                           this.mCellWidthF, this.mCellHeightF);
+                    }
+
+                    lCurrentPosition.X += this.mCellWidthF;
+                }
+
+                lCurrentPosition.Y += this.mCellHeightF;
             }
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
+
+            const float lcZeroValueThreshold = 0.001f;
+            if ((Math.Abs(this.mCellWidthF) < lcZeroValueThreshold) ||
+                (Math.Abs(this.mCellHeightF) < lcZeroValueThreshold))
+            {
+                return;
+            }
+
+            var lIndexX = (int) ((e.X - this.ClientRectangle.Left)/this.mCellWidthF);
+            var lIndexY = (int) ((e.Y - this.ClientRectangle.Top)/this.mCellHeightF);
+
+            this.Grid[lIndexY, lIndexX].Marker = this.ActiveMarker;
+            this.Invalidate();
         }
 
         private void DrawGrid(PaintEventArgs e)
         {
-            var lCellWidthF = (float) (this.ClientRectangle.Width)/this.Grid.Width;
-            var lCellHeightF = (float) (this.ClientRectangle.Height)/this.Grid.Height;
 
             const int lcThickLineFrequency = 5;
 
@@ -97,7 +133,7 @@ namespace CrossStitchPatternMaker.WinForms
                         lThickLineCounter = 0;
                     }
 
-                    lCurrentY += lCellHeightF;
+                    lCurrentY += this.mCellHeightF;
                     e.Graphics.DrawLine(lPen, this.ClientRectangle.Left, lCurrentY, this.ClientRectangle.Right, lCurrentY);
                 }
 
@@ -114,7 +150,7 @@ namespace CrossStitchPatternMaker.WinForms
                         lThickLineCounter = 0;
                     }
 
-                    lCurrentX += lCellWidthF;
+                    lCurrentX += this.mCellWidthF;
                     e.Graphics.DrawLine(lPen, lCurrentX, this.ClientRectangle.Top, lCurrentX, this.ClientRectangle.Bottom);
                 }
             }

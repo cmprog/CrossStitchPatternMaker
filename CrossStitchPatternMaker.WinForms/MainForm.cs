@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.IO;
+using System.Windows.Forms;
 
 namespace CrossStitchPatternMaker.WinForms
 {
@@ -15,6 +17,12 @@ namespace CrossStitchPatternMaker.WinForms
         public MainForm()
         {
             InitializeComponent();
+
+            var lApplicationDataDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var lCrossStitchDirectoryPath = Path.Combine(lApplicationDataDirectoryPath, "CrossStitchPatternMaker");
+            var lMarkerDirectoryPath = Path.Combine(lCrossStitchDirectoryPath, "Markers");
+            Directory.CreateDirectory(lMarkerDirectoryPath);
+            this.mMarkerSelectionControl.Repository = new StitchMarkerRepository(lMarkerDirectoryPath);
         }
 
         #endregion
@@ -40,6 +48,11 @@ namespace CrossStitchPatternMaker.WinForms
         private void ToolStripMenuItemFileNew_Click(object sender, System.EventArgs e)
         {
             this.ActivePattern = new CrossStitchPattern();
+        }
+
+        private void MarkerSelectionControl_SelectedMarkerChanged(object sender, EventArgs e)
+        {
+            this.mStitchPatternControl.ActiveMarker = this.mMarkerSelectionControl.SelectedMarker;
         }
 
         #endregion

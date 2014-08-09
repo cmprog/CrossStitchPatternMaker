@@ -38,7 +38,7 @@
             this.mToolStripMenuItemFileSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mToolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mStitchPatternControl = new CrossStitchPatternMaker.WinForms.StitchPatternControl();
-            this.mPatternSelectionControl = new CrossStitchPatternMaker.WinForms.PatternSelectionControl();
+            this.mMarkerSelectionControl = new CrossStitchPatternMaker.WinForms.MarkerSelectionControl();
             this.mMainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,47 +69,47 @@
             // mToolStripMenuItemFileNew
             // 
             this.mToolStripMenuItemFileNew.Name = "mToolStripMenuItemFileNew";
-            this.mToolStripMenuItemFileNew.Size = new System.Drawing.Size(152, 22);
+            this.mToolStripMenuItemFileNew.Size = new System.Drawing.Size(144, 22);
             this.mToolStripMenuItemFileNew.Text = "New Pattern";
             this.mToolStripMenuItemFileNew.Click += new System.EventHandler(this.ToolStripMenuItemFileNew_Click);
             // 
             // mToolStripMenuItemFileOpen
             // 
             this.mToolStripMenuItemFileOpen.Name = "mToolStripMenuItemFileOpen";
-            this.mToolStripMenuItemFileOpen.Size = new System.Drawing.Size(152, 22);
+            this.mToolStripMenuItemFileOpen.Size = new System.Drawing.Size(144, 22);
             this.mToolStripMenuItemFileOpen.Text = "Open Pattern";
             // 
             // mToolStripMenuItemFileSeparator1
             // 
             this.mToolStripMenuItemFileSeparator1.Name = "mToolStripMenuItemFileSeparator1";
-            this.mToolStripMenuItemFileSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.mToolStripMenuItemFileSeparator1.Size = new System.Drawing.Size(141, 6);
             // 
             // mToolStripMenuItemFileSave
             // 
             this.mToolStripMenuItemFileSave.Name = "mToolStripMenuItemFileSave";
-            this.mToolStripMenuItemFileSave.Size = new System.Drawing.Size(152, 22);
+            this.mToolStripMenuItemFileSave.Size = new System.Drawing.Size(144, 22);
             this.mToolStripMenuItemFileSave.Text = "Save";
             // 
             // mToolStripMenuItemFileSaveAs
             // 
             this.mToolStripMenuItemFileSaveAs.Name = "mToolStripMenuItemFileSaveAs";
-            this.mToolStripMenuItemFileSaveAs.Size = new System.Drawing.Size(152, 22);
+            this.mToolStripMenuItemFileSaveAs.Size = new System.Drawing.Size(144, 22);
             this.mToolStripMenuItemFileSaveAs.Text = "Save As";
             // 
             // mToolStripMenuItemFileSeparator2
             // 
             this.mToolStripMenuItemFileSeparator2.Name = "mToolStripMenuItemFileSeparator2";
-            this.mToolStripMenuItemFileSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.mToolStripMenuItemFileSeparator2.Size = new System.Drawing.Size(141, 6);
             // 
             // mToolStripMenuItemExit
             // 
             this.mToolStripMenuItemExit.Name = "mToolStripMenuItemExit";
-            this.mToolStripMenuItemExit.Size = new System.Drawing.Size(152, 22);
+            this.mToolStripMenuItemExit.Size = new System.Drawing.Size(144, 22);
             this.mToolStripMenuItemExit.Text = "Exit";
             // 
             // mStitchPatternControl
             // 
-            this.mStitchPatternControl.ActivePattern = null;
+            this.mStitchPatternControl.ActiveMarker = null;
             this.mStitchPatternControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mStitchPatternControl.Grid = null;
             this.mStitchPatternControl.Location = new System.Drawing.Point(0, 24);
@@ -118,13 +118,16 @@
             this.mStitchPatternControl.TabIndex = 0;
             this.mStitchPatternControl.Text = "stitchPatternControl1";
             // 
-            // mPatternSelectionControl
+            // mMarkerSelectionControl
             // 
-            this.mPatternSelectionControl.Dock = System.Windows.Forms.DockStyle.Right;
-            this.mPatternSelectionControl.Location = new System.Drawing.Point(555, 24);
-            this.mPatternSelectionControl.Name = "mPatternSelectionControl";
-            this.mPatternSelectionControl.Size = new System.Drawing.Size(292, 456);
-            this.mPatternSelectionControl.TabIndex = 2;
+            this.mMarkerSelectionControl.Dock = System.Windows.Forms.DockStyle.Right;
+            this.mMarkerSelectionControl.Location = new System.Drawing.Point(555, 24);
+            this.mMarkerSelectionControl.Name = "mMarkerSelectionControl";
+            this.mMarkerSelectionControl.Repository = null;
+            this.mMarkerSelectionControl.SelectedMarker = null;
+            this.mMarkerSelectionControl.Size = new System.Drawing.Size(292, 456);
+            this.mMarkerSelectionControl.TabIndex = 2;
+            this.mMarkerSelectionControl.SelectedMarkerChanged += new System.EventHandler(this.MarkerSelectionControl_SelectedMarkerChanged);
             // 
             // MainForm
             // 
@@ -132,7 +135,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(847, 480);
             this.Controls.Add(this.mStitchPatternControl);
-            this.Controls.Add(this.mPatternSelectionControl);
+            this.Controls.Add(this.mMarkerSelectionControl);
             this.Controls.Add(this.mMainMenuStrip);
             this.MainMenuStrip = this.mMainMenuStrip;
             this.Name = "MainForm";
@@ -157,7 +160,7 @@
         private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemFileSaveAs;
         private System.Windows.Forms.ToolStripSeparator mToolStripMenuItemFileSeparator2;
         private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemExit;
-        private PatternSelectionControl mPatternSelectionControl;
+        private MarkerSelectionControl mMarkerSelectionControl;
     }
 }
 
