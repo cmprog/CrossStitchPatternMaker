@@ -71,5 +71,16 @@ namespace CrossStitchPatternMaker
         #region Instance Methods -------------------------------------------------------
 
         #endregion
+
+        public void Clear()
+        {
+            for (int lRowIndex = 0; lRowIndex < this.Height; lRowIndex++)
+            {
+                for (int lColumnIndex = 0; lColumnIndex < this.Width; lColumnIndex++)
+                {
+                    this[lRowIndex, lColumnIndex].Marker = null;
+                }
+            }
+        }
     }
 }
