@@ -28,7 +28,7 @@
     <ProductName>Cross Stitch Pattern Maker</ProductName>
     <PublisherName>Morse Coding</PublisherName>
     <SuiteName>Cross Stitch Pattern Maker</SuiteName>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>0.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

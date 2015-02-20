@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -21,6 +22,32 @@ namespace CrossStitchPatternMaker.WinForms
         public MainForm()
         {
             InitializeComponent();
+
+            const int lcDefaultCellPerInch = 10;
+            for (int lCellPerInch = 5; lCellPerInch <= 12; lCellPerInch++)
+            {
+                var lToolStripMenuItem = new ToolStripMenuItem();
+                lToolStripMenuItem.Text = lCellPerInch.ToString();
+                lToolStripMenuItem.Tag = (float)lCellPerInch;
+                lToolStripMenuItem.Click += this.ToolStripMenuItemCellsPerInchValue_CheckedChanged;
+                lToolStripMenuItem.CheckOnClick = true;
+                lToolStripMenuItem.Checked = (lCellPerInch == lcDefaultCellPerInch);
+                this.mToolStripMenuItemCellsPerInch.DropDownItems.Add(lToolStripMenuItem);
+            }
+            this.mStitchPatternControl.CellsPerInch = lcDefaultCellPerInch;
+
+            const int lcDefaultLineMarkerAmount = 10;
+            for (int lLineMarkerAmount = 5; lLineMarkerAmount <= 12; lLineMarkerAmount++)
+            {
+                var lToolStripMenuItem = new ToolStripMenuItem();
+                lToolStripMenuItem.Text = lLineMarkerAmount.ToString();
+                lToolStripMenuItem.Tag = lLineMarkerAmount;
+                lToolStripMenuItem.Click += this.ToolStripMenuItemLineMarkerValue_CheckedChanged;
+                lToolStripMenuItem.CheckOnClick = true;
+                lToolStripMenuItem.Checked = (lLineMarkerAmount == 10);
+                this.mToolStripMenuItemLineMarker.DropDownItems.Add(lToolStripMenuItem);
+            }
+            this.mStitchPatternControl.ThickLineFrequency = lcDefaultLineMarkerAmount;
 
             this.ActivePattern = new CrossStitchPattern();
 
@@ -152,6 +179,38 @@ namespace CrossStitchPatternMaker.WinForms
                 lPrintDocument.DefaultPageSettings.Margins.Left = 50;
                 lPrintDocument.Print();
             }
+        }
+
+        private void ToolStripMenuItemCellsPerInchValue_CheckedChanged(object sender, EventArgs e)
+        {
+            var lToolStripMenuItem = (ToolStripMenuItem) sender;
+            if (!lToolStripMenuItem.Checked) return;
+
+            foreach (var lItem in this.mToolStripMenuItemCellsPerInch
+                .DropDownItems.OfType<ToolStripMenuItem>().Where(x => x.CheckOnClick))
+            {
+                if (lItem == lToolStripMenuItem) continue;
+                lItem.Checked = false;
+            }
+
+            var lValue = (float) lToolStripMenuItem.Tag;
+            this.mStitchPatternControl.CellsPerInch = lValue;
+        }
+
+        private void ToolStripMenuItemLineMarkerValue_CheckedChanged(object sender, EventArgs e)
+        {
+            var lToolStripMenuItem = (ToolStripMenuItem)sender;
+            if (!lToolStripMenuItem.Checked) return;
+
+            foreach (var lItem in this.mToolStripMenuItemLineMarker
+                .DropDownItems.OfType<ToolStripMenuItem>().Where(x => x.CheckOnClick))
+            {
+                if (lItem == lToolStripMenuItem) continue;
+                lItem.Checked = false;
+            }
+
+            var lValue = (int) lToolStripMenuItem.Tag;
+            this.mStitchPatternControl.ThickLineFrequency = lValue;
         }
 
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)

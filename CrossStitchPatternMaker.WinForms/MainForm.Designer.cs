@@ -37,13 +37,16 @@
             this.mToolStripMenuItemFileSave = new System.Windows.Forms.ToolStripMenuItem();
             this.mToolStripMenuItemFileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.mToolStripMenuItemFileSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mToolStripMenuItemFilePrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mToolStripMenuItemFileExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mToolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.mToolStripMenuItemEditClear = new System.Windows.Forms.ToolStripMenuItem();
+            this.mToolStripMenuItemView = new System.Windows.Forms.ToolStripMenuItem();
+            this.mToolStripMenuItemCellsPerInch = new System.Windows.Forms.ToolStripMenuItem();
             this.mStitchPatternControl = new CrossStitchPatternMaker.WinForms.StitchPatternControl();
             this.mMarkerSelectionControl = new CrossStitchPatternMaker.WinForms.MarkerSelectionControl();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mToolStripMenuItemFilePrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.mToolStripMenuItemLineMarker = new System.Windows.Forms.ToolStripMenuItem();
             this.mMainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,7 +54,8 @@
             // 
             this.mMainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mToolStripMenuItemFile,
-            this.mToolStripMenuItemEdit});
+            this.mToolStripMenuItemEdit,
+            this.mToolStripMenuItemView});
             this.mMainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mMainMenuStrip.Name = "mMainMenuStrip";
             this.mMainMenuStrip.Size = new System.Drawing.Size(847, 24);
@@ -122,6 +126,20 @@
             this.mToolStripMenuItemFileSeparator2.Name = "mToolStripMenuItemFileSeparator2";
             this.mToolStripMenuItemFileSeparator2.Size = new System.Drawing.Size(193, 6);
             // 
+            // mToolStripMenuItemFilePrint
+            // 
+            this.mToolStripMenuItemFilePrint.Name = "mToolStripMenuItemFilePrint";
+            this.mToolStripMenuItemFilePrint.ShortcutKeyDisplayString = "Ctrl+P";
+            this.mToolStripMenuItemFilePrint.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.mToolStripMenuItemFilePrint.Size = new System.Drawing.Size(196, 22);
+            this.mToolStripMenuItemFilePrint.Text = "&Print...";
+            this.mToolStripMenuItemFilePrint.Click += new System.EventHandler(this.ToolStripMenuItemFilePrint_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(193, 6);
+            // 
             // mToolStripMenuItemFileExit
             // 
             this.mToolStripMenuItemFileExit.Name = "mToolStripMenuItemFileExit";
@@ -145,16 +163,34 @@
             this.mToolStripMenuItemEditClear.Text = "Clear Grid";
             this.mToolStripMenuItemEditClear.Click += new System.EventHandler(this.ToolStripMenuItemEditClear_Click);
             // 
+            // mToolStripMenuItemView
+            // 
+            this.mToolStripMenuItemView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mToolStripMenuItemCellsPerInch,
+            this.mToolStripMenuItemLineMarker});
+            this.mToolStripMenuItemView.Name = "mToolStripMenuItemView";
+            this.mToolStripMenuItemView.Size = new System.Drawing.Size(44, 20);
+            this.mToolStripMenuItemView.Text = "View";
+            // 
+            // mToolStripMenuItemCellsPerInch
+            // 
+            this.mToolStripMenuItemCellsPerInch.Name = "mToolStripMenuItemCellsPerInch";
+            this.mToolStripMenuItemCellsPerInch.Size = new System.Drawing.Size(167, 22);
+            this.mToolStripMenuItemCellsPerInch.Text = "Cells Per Inch";
+            // 
             // mStitchPatternControl
             // 
             this.mStitchPatternControl.ActiveMarker = null;
+            this.mStitchPatternControl.CellsPerInch = 10F;
             this.mStitchPatternControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mStitchPatternControl.Grid = null;
             this.mStitchPatternControl.Location = new System.Drawing.Point(0, 24);
             this.mStitchPatternControl.Name = "mStitchPatternControl";
+            this.mStitchPatternControl.Padding = new System.Windows.Forms.Padding(1);
             this.mStitchPatternControl.Size = new System.Drawing.Size(622, 456);
             this.mStitchPatternControl.TabIndex = 0;
             this.mStitchPatternControl.Text = "stitchPatternControl1";
+            this.mStitchPatternControl.ThickLineFrequency = 0;
             // 
             // mMarkerSelectionControl
             // 
@@ -167,19 +203,11 @@
             this.mMarkerSelectionControl.TabIndex = 2;
             this.mMarkerSelectionControl.SelectedMarkerChanged += new System.EventHandler(this.MarkerSelectionControl_SelectedMarkerChanged);
             // 
-            // toolStripSeparator1
+            // mToolStripMenuItemLineMarker
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(193, 6);
-            // 
-            // mToolStripMenuItemFilePrint
-            // 
-            this.mToolStripMenuItemFilePrint.Name = "mToolStripMenuItemFilePrint";
-            this.mToolStripMenuItemFilePrint.ShortcutKeyDisplayString = "Ctrl+P";
-            this.mToolStripMenuItemFilePrint.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.mToolStripMenuItemFilePrint.Size = new System.Drawing.Size(196, 22);
-            this.mToolStripMenuItemFilePrint.Text = "&Print...";
-            this.mToolStripMenuItemFilePrint.Click += new System.EventHandler(this.ToolStripMenuItemFilePrint_Click);
+            this.mToolStripMenuItemLineMarker.Name = "mToolStripMenuItemLineMarker";
+            this.mToolStripMenuItemLineMarker.Size = new System.Drawing.Size(167, 22);
+            this.mToolStripMenuItemLineMarker.Text = "Line Marker Every";
             // 
             // MainForm
             // 
@@ -217,6 +245,9 @@
         private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemEditClear;
         private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemFilePrint;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemView;
+        private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemCellsPerInch;
+        private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemLineMarker;
     }
 }
 
