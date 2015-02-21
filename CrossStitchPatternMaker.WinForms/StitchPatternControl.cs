@@ -130,7 +130,21 @@ namespace CrossStitchPatternMaker.WinForms
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
+            this.PlaceMarker(e.X, e.Y);
+        }
 
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                this.PlaceMarker(e.X, e.Y);
+            }
+        }
+
+        private void PlaceMarker(int x, int y)
+        {
             const float lcZeroValueThreshold = 0.001f;
             if ((Math.Abs(this.mCellSizeF.Width) < lcZeroValueThreshold) ||
                 (Math.Abs(this.mCellSizeF.Height) < lcZeroValueThreshold))
@@ -138,11 +152,11 @@ namespace CrossStitchPatternMaker.WinForms
                 return;
             }
 
-            var lNormalizedPositionX = e.X - this.AutoScrollPosition.X;
-            var lNormalizedPositionY = e.Y - this.AutoScrollPosition.Y;
+            var lNormalizedPositionX = x - this.AutoScrollPosition.X;
+            var lNormalizedPositionY = y - this.AutoScrollPosition.Y;
 
-            var lIndexX = (int) ((lNormalizedPositionX - this.ClientRectangle.Left)/this.mCellSizeF.Width);
-            var lIndexY = (int) ((lNormalizedPositionY - this.ClientRectangle.Top)/this.mCellSizeF.Height);
+            var lIndexX = (int)((lNormalizedPositionX - this.ClientRectangle.Left) / this.mCellSizeF.Width);
+            var lIndexY = (int)((lNormalizedPositionY - this.ClientRectangle.Top) / this.mCellSizeF.Height);
 
             if ((lIndexX < 0) || (lIndexX >= this.Grid.Width)) return;
             if ((lIndexY < 0) || (lIndexY >= this.Grid.Height)) return;
@@ -151,7 +165,10 @@ namespace CrossStitchPatternMaker.WinForms
             var lIsControlDown = ((lModifierKeys & Keys.Control) == Keys.Control);
             var lMarker = lIsControlDown ? null : this.ActiveMarker;
 
-            this.Grid[lIndexY, lIndexX].Marker = lMarker;
+            var lCell = this.Grid[lIndexY, lIndexX];
+            if (lCell.Marker == lMarker) return;
+
+            lCell.Marker = lMarker;
             this.Invalidate();
         }
 
