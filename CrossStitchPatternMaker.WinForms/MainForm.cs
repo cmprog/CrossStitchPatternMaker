@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
@@ -195,6 +194,31 @@ namespace CrossStitchPatternMaker.WinForms
 
             var lValue = (float) lToolStripMenuItem.Tag;
             this.mStitchPatternControl.CellsPerInch = lValue;
+        }
+
+        private void ToolStripMenuItemChangeGridSize_Click(object sender, EventArgs e)
+        {
+            using (var lDialog = new GridSizeDialog())
+            {
+                lDialog.GridWidth = this.ActivePattern.Grid.Width;
+                lDialog.GridHeight = this.ActivePattern.Grid.Height;
+                if (lDialog.ShowDialog(this) != DialogResult.OK) return;
+
+                var lSuggestedWidth = lDialog.GridWidth;
+                var lSuggestedHeight = lDialog.GridHeight;
+
+                if (this.ActivePattern.Grid.WillSizeChangeResultInDataLoss(lSuggestedWidth, lSuggestedHeight))
+                {
+                    var lDialogResult = MessageBox.Show(
+                        "Are you sure you want to make the grid smaller? This will result in a loss of work.", 
+                        "Are you sure...", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                    if (lDialogResult != DialogResult.Yes) return;
+                }
+
+                this.ActivePattern.Grid.Width = lSuggestedWidth;
+                this.ActivePattern.Grid.Height = lSuggestedHeight;
+                this.mStitchPatternControl.Invalidate();
+            }
         }
 
         private void ToolStripMenuItemLineMarkerValue_CheckedChanged(object sender, EventArgs e)

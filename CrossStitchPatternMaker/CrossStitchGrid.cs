@@ -82,5 +82,32 @@ namespace CrossStitchPatternMaker
                 }
             }
         }
+
+        public bool WillSizeChangeResultInDataLoss(int suggestedWidth, int suggestedHeight)
+        {
+            if (suggestedWidth < this.Width)
+            {
+                for (int lRowIndex = 0; lRowIndex < this.Height; lRowIndex++)
+                {
+                    for (int lColumnIndex = suggestedWidth; lColumnIndex < this.Width; lColumnIndex++)
+                    {
+                        if (this[lRowIndex, lColumnIndex].Marker != null) return true;
+                    }
+                }
+            }
+
+            if (suggestedHeight < this.Height)
+            {
+                for (int lRowIndex = suggestedHeight; lRowIndex < this.Height; lRowIndex++)
+                {
+                    for (int lColumnIndex = 0; lColumnIndex < this.Width; lColumnIndex++)
+                    {
+                        if (this[lRowIndex, lColumnIndex].Marker != null) return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }

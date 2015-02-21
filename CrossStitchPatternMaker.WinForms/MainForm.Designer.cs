@@ -44,9 +44,10 @@
             this.mToolStripMenuItemEditClear = new System.Windows.Forms.ToolStripMenuItem();
             this.mToolStripMenuItemView = new System.Windows.Forms.ToolStripMenuItem();
             this.mToolStripMenuItemCellsPerInch = new System.Windows.Forms.ToolStripMenuItem();
+            this.mToolStripMenuItemLineMarker = new System.Windows.Forms.ToolStripMenuItem();
+            this.mToolStripMenuItemChangeGridSize = new System.Windows.Forms.ToolStripMenuItem();
             this.mStitchPatternControl = new CrossStitchPatternMaker.WinForms.StitchPatternControl();
             this.mMarkerSelectionControl = new CrossStitchPatternMaker.WinForms.MarkerSelectionControl();
-            this.mToolStripMenuItemLineMarker = new System.Windows.Forms.ToolStripMenuItem();
             this.mMainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -167,7 +168,8 @@
             // 
             this.mToolStripMenuItemView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mToolStripMenuItemCellsPerInch,
-            this.mToolStripMenuItemLineMarker});
+            this.mToolStripMenuItemLineMarker,
+            this.mToolStripMenuItemChangeGridSize});
             this.mToolStripMenuItemView.Name = "mToolStripMenuItemView";
             this.mToolStripMenuItemView.Size = new System.Drawing.Size(44, 20);
             this.mToolStripMenuItemView.Text = "View";
@@ -175,8 +177,21 @@
             // mToolStripMenuItemCellsPerInch
             // 
             this.mToolStripMenuItemCellsPerInch.Name = "mToolStripMenuItemCellsPerInch";
-            this.mToolStripMenuItemCellsPerInch.Size = new System.Drawing.Size(167, 22);
+            this.mToolStripMenuItemCellsPerInch.Size = new System.Drawing.Size(170, 22);
             this.mToolStripMenuItemCellsPerInch.Text = "Cells Per Inch";
+            // 
+            // mToolStripMenuItemLineMarker
+            // 
+            this.mToolStripMenuItemLineMarker.Name = "mToolStripMenuItemLineMarker";
+            this.mToolStripMenuItemLineMarker.Size = new System.Drawing.Size(170, 22);
+            this.mToolStripMenuItemLineMarker.Text = "Line Marker Every";
+            // 
+            // mToolStripMenuItemChangeGridSize
+            // 
+            this.mToolStripMenuItemChangeGridSize.Name = "mToolStripMenuItemChangeGridSize";
+            this.mToolStripMenuItemChangeGridSize.Size = new System.Drawing.Size(170, 22);
+            this.mToolStripMenuItemChangeGridSize.Text = "Change grid size...";
+            this.mToolStripMenuItemChangeGridSize.Click += new System.EventHandler(this.ToolStripMenuItemChangeGridSize_Click);
             // 
             // mStitchPatternControl
             // 
@@ -202,12 +217,6 @@
             this.mMarkerSelectionControl.Size = new System.Drawing.Size(225, 456);
             this.mMarkerSelectionControl.TabIndex = 2;
             this.mMarkerSelectionControl.SelectedMarkerChanged += new System.EventHandler(this.MarkerSelectionControl_SelectedMarkerChanged);
-            // 
-            // mToolStripMenuItemLineMarker
-            // 
-            this.mToolStripMenuItemLineMarker.Name = "mToolStripMenuItemLineMarker";
-            this.mToolStripMenuItemLineMarker.Size = new System.Drawing.Size(167, 22);
-            this.mToolStripMenuItemLineMarker.Text = "Line Marker Every";
             // 
             // MainForm
             // 
@@ -248,6 +257,7 @@
         private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemView;
         private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemCellsPerInch;
         private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemLineMarker;
+        private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemChangeGridSize;
     }
 }
 
