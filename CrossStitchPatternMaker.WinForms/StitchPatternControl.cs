@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using CrossStitchPatternMaker.Drawing;
 
 namespace CrossStitchPatternMaker.WinForms
 {
@@ -85,45 +86,24 @@ namespace CrossStitchPatternMaker.WinForms
             {
                 e.Graphics.Clear(Color.White);
 
-                this.mCellSizeF = new SizeF(e.Graphics.DpiX/this.CellsPerInch, e.Graphics.DpiY/this.CellsPerInch);
+                var lGridSize = GridRenderer.MeasureGrid(e.Graphics, this.Grid, this.CellsPerInch);
 
-                var lGridBoundsF = new RectangleF(
-                    this.Padding.Left, this.Padding.Top,
-                    (this.mCellSizeF.Width*this.Grid.Width) + this.Padding.Left + this.Padding.Right,
-                    (this.mCellSizeF.Height * this.Grid.Height) + this.Padding.Top + this.Padding.Bottom);
-                var lGridBounds = Rectangle.Truncate(lGridBoundsF);
-                this.AutoScrollMinSize = lGridBounds.Size;
+                var lGridBounds = new Rectangle(new Point(this.Padding.Left, this.Padding.Top), lGridSize);
+                var lPaddedGridBounds = new Rectangle(
+                    lGridBounds.X, lGridBounds.Y,
+                    lGridBounds.Width + this.Padding.Horizontal,
+                    lGridBounds.Height + this.Padding.Vertical);
+                this.AutoScrollMinSize = lPaddedGridBounds.Size;
 
+                // We cache the cell size here to make mouse tracking easier.
+                this.mCellSizeF = new SizeF(
+                    (float)lGridSize.Width / this.Grid.Width, 
+                    (float)lGridSize.Height / this.Grid.Height);
+
+                var lSavedGraphicsState = e.Graphics.Save();
                 e.Graphics.TranslateTransform(this.AutoScrollPosition.X, this.AutoScrollPosition.Y);
-
-                this.DrawMarkers(e.Graphics, lGridBounds, this.mCellSizeF);
-                this.DrawGrid(e.Graphics, lGridBounds, this.mCellSizeF);
-                this.DrawCenterArrowMarkers(e.Graphics, lGridBounds, this.mCellSizeF);
-            }
-        }
-
-        private void DrawMarkers(Graphics g, Rectangle bounds, SizeF cellSizeF)
-        {
-            var lCurrentPosition = new PointF(bounds.Left, bounds.Top);
-            for (int lRowIndex = 0; lRowIndex < this.Grid.Height; lRowIndex++)
-            {
-                lCurrentPosition.X = bounds.Left;
-
-                for (int lColumnIndex = 0; lColumnIndex < this.Grid.Width; lColumnIndex++)
-                {
-                    var lCell = this.Grid[lRowIndex, lColumnIndex];
-                    if ((lCell != null) && (lCell.Marker != null) && (lCell.Marker.Image != null))
-                    {
-                        g.DrawImage(
-                           lCell.Marker.Image,
-                           lCurrentPosition.X, lCurrentPosition.Y,
-                           cellSizeF.Width, cellSizeF.Height);
-                    }
-
-                    lCurrentPosition.X += cellSizeF.Width;
-                }
-
-                lCurrentPosition.Y += cellSizeF.Height;
+                GridRenderer.DrawGrid(e.Graphics, this.Grid, lGridBounds, this.ThickLineFrequency);
+                e.Graphics.Restore(lSavedGraphicsState);
             }
         }
 
@@ -247,14 +227,6 @@ namespace CrossStitchPatternMaker.WinForms
                     lMiddlePositionX + lArrowOffsetF.Width, bounds.Y + lArrowSizeF.Width - lArrowOffsetF.Width,
                     lMiddlePositionX, bounds.Y + lArrowSizeF.Height);
             }
-        }
-
-        internal void DrawGrid(Graphics g, Rectangle bounds)
-        {
-            var lCellSizeF = new SizeF(g.DpiX*this.CellsPerInch, g.DpiY*this.CellsPerInch);
-            this.DrawMarkers(g, bounds, lCellSizeF);
-            this.DrawGrid(g, bounds, lCellSizeF);
-            this.DrawCenterArrowMarkers(g, bounds, lCellSizeF);
         }
 
         #endregion

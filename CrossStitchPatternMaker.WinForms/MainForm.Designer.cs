@@ -41,13 +41,16 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mToolStripMenuItemFileExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mToolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mToolStripMenuItemChangeGridSize = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mToolStripMenuItemEditClear = new System.Windows.Forms.ToolStripMenuItem();
             this.mToolStripMenuItemView = new System.Windows.Forms.ToolStripMenuItem();
             this.mToolStripMenuItemCellsPerInch = new System.Windows.Forms.ToolStripMenuItem();
             this.mToolStripMenuItemLineMarker = new System.Windows.Forms.ToolStripMenuItem();
-            this.mToolStripMenuItemChangeGridSize = new System.Windows.Forms.ToolStripMenuItem();
             this.mStitchPatternControl = new CrossStitchPatternMaker.WinForms.StitchPatternControl();
             this.mMarkerSelectionControl = new CrossStitchPatternMaker.WinForms.MarkerSelectionControl();
+            this.mToolStripMenuItemFileExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.mToolStripMenuItemFileExportPng = new System.Windows.Forms.ToolStripMenuItem();
             this.mMainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,6 +74,7 @@
             this.mToolStripMenuItemFileSeparator1,
             this.mToolStripMenuItemFileSave,
             this.mToolStripMenuItemFileSaveAs,
+            this.mToolStripMenuItemFileExport,
             this.mToolStripMenuItemFileSeparator2,
             this.mToolStripMenuItemFilePrint,
             this.toolStripSeparator1,
@@ -152,39 +156,12 @@
             // mToolStripMenuItemEdit
             // 
             this.mToolStripMenuItemEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mToolStripMenuItemChangeGridSize,
+            this.toolStripSeparator2,
             this.mToolStripMenuItemEditClear});
             this.mToolStripMenuItemEdit.Name = "mToolStripMenuItemEdit";
             this.mToolStripMenuItemEdit.Size = new System.Drawing.Size(39, 20);
             this.mToolStripMenuItemEdit.Text = "Edit";
-            // 
-            // mToolStripMenuItemEditClear
-            // 
-            this.mToolStripMenuItemEditClear.Name = "mToolStripMenuItemEditClear";
-            this.mToolStripMenuItemEditClear.Size = new System.Drawing.Size(126, 22);
-            this.mToolStripMenuItemEditClear.Text = "Clear Grid";
-            this.mToolStripMenuItemEditClear.Click += new System.EventHandler(this.ToolStripMenuItemEditClear_Click);
-            // 
-            // mToolStripMenuItemView
-            // 
-            this.mToolStripMenuItemView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mToolStripMenuItemCellsPerInch,
-            this.mToolStripMenuItemLineMarker,
-            this.mToolStripMenuItemChangeGridSize});
-            this.mToolStripMenuItemView.Name = "mToolStripMenuItemView";
-            this.mToolStripMenuItemView.Size = new System.Drawing.Size(44, 20);
-            this.mToolStripMenuItemView.Text = "View";
-            // 
-            // mToolStripMenuItemCellsPerInch
-            // 
-            this.mToolStripMenuItemCellsPerInch.Name = "mToolStripMenuItemCellsPerInch";
-            this.mToolStripMenuItemCellsPerInch.Size = new System.Drawing.Size(170, 22);
-            this.mToolStripMenuItemCellsPerInch.Text = "Cells Per Inch";
-            // 
-            // mToolStripMenuItemLineMarker
-            // 
-            this.mToolStripMenuItemLineMarker.Name = "mToolStripMenuItemLineMarker";
-            this.mToolStripMenuItemLineMarker.Size = new System.Drawing.Size(170, 22);
-            this.mToolStripMenuItemLineMarker.Text = "Line Marker Every";
             // 
             // mToolStripMenuItemChangeGridSize
             // 
@@ -192,6 +169,39 @@
             this.mToolStripMenuItemChangeGridSize.Size = new System.Drawing.Size(170, 22);
             this.mToolStripMenuItemChangeGridSize.Text = "Change grid size...";
             this.mToolStripMenuItemChangeGridSize.Click += new System.EventHandler(this.ToolStripMenuItemChangeGridSize_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(167, 6);
+            // 
+            // mToolStripMenuItemEditClear
+            // 
+            this.mToolStripMenuItemEditClear.Name = "mToolStripMenuItemEditClear";
+            this.mToolStripMenuItemEditClear.Size = new System.Drawing.Size(170, 22);
+            this.mToolStripMenuItemEditClear.Text = "Clear Grid";
+            this.mToolStripMenuItemEditClear.Click += new System.EventHandler(this.ToolStripMenuItemEditClear_Click);
+            // 
+            // mToolStripMenuItemView
+            // 
+            this.mToolStripMenuItemView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mToolStripMenuItemCellsPerInch,
+            this.mToolStripMenuItemLineMarker});
+            this.mToolStripMenuItemView.Name = "mToolStripMenuItemView";
+            this.mToolStripMenuItemView.Size = new System.Drawing.Size(44, 20);
+            this.mToolStripMenuItemView.Text = "View";
+            // 
+            // mToolStripMenuItemCellsPerInch
+            // 
+            this.mToolStripMenuItemCellsPerInch.Name = "mToolStripMenuItemCellsPerInch";
+            this.mToolStripMenuItemCellsPerInch.Size = new System.Drawing.Size(167, 22);
+            this.mToolStripMenuItemCellsPerInch.Text = "Cells Per Inch";
+            // 
+            // mToolStripMenuItemLineMarker
+            // 
+            this.mToolStripMenuItemLineMarker.Name = "mToolStripMenuItemLineMarker";
+            this.mToolStripMenuItemLineMarker.Size = new System.Drawing.Size(167, 22);
+            this.mToolStripMenuItemLineMarker.Text = "Line Marker Every";
             // 
             // mStitchPatternControl
             // 
@@ -217,6 +227,21 @@
             this.mMarkerSelectionControl.Size = new System.Drawing.Size(225, 456);
             this.mMarkerSelectionControl.TabIndex = 2;
             this.mMarkerSelectionControl.SelectedMarkerChanged += new System.EventHandler(this.MarkerSelectionControl_SelectedMarkerChanged);
+            // 
+            // mToolStripMenuItemFileExport
+            // 
+            this.mToolStripMenuItemFileExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mToolStripMenuItemFileExportPng});
+            this.mToolStripMenuItemFileExport.Name = "mToolStripMenuItemFileExport";
+            this.mToolStripMenuItemFileExport.Size = new System.Drawing.Size(196, 22);
+            this.mToolStripMenuItemFileExport.Text = "Export";
+            // 
+            // mToolStripMenuItemFileExportPng
+            // 
+            this.mToolStripMenuItemFileExportPng.Name = "mToolStripMenuItemFileExportPng";
+            this.mToolStripMenuItemFileExportPng.Size = new System.Drawing.Size(152, 22);
+            this.mToolStripMenuItemFileExportPng.Text = "to PNG...";
+            this.mToolStripMenuItemFileExportPng.Click += new System.EventHandler(this.ToolStripMenuItemExportPng_Click);
             // 
             // MainForm
             // 
@@ -258,6 +283,9 @@
         private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemCellsPerInch;
         private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemLineMarker;
         private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemChangeGridSize;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemFileExport;
+        private System.Windows.Forms.ToolStripMenuItem mToolStripMenuItemFileExportPng;
     }
 }
 

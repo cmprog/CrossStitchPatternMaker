@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using CrossStitchPatternMaker.Drawing;
 
 namespace CrossStitchPatternMaker.WinForms
 {
@@ -239,10 +242,38 @@ namespace CrossStitchPatternMaker.WinForms
 
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
-            this.mStitchPatternControl.DrawGrid(e.Graphics, e.MarginBounds);
+            var lGridSize = GridRenderer.MeasureGrid(
+                e.Graphics, this.ActivePattern.Grid, 
+                this.mStitchPatternControl.CellsPerInch);
+
+            GridRenderer.DrawGrid(
+                e.Graphics, this.ActivePattern.Grid,
+                new Rectangle(Point.Empty, lGridSize),
+                this.mStitchPatternControl.ThickLineFrequency);
+
             e.HasMorePages = false;
         }
 
         #endregion
+
+        private void ToolStripMenuItemExportPng_Click(object sender, EventArgs e)
+        {
+            using (var lMeasurementGraphics = this.mMarkerSelectionControl.CreateGraphics())
+            {
+                var lGridSize = GridRenderer.MeasureGrid(
+                    lMeasurementGraphics, this.ActivePattern.Grid,
+                    this.mStitchPatternControl.CellsPerInch);
+
+                using (var lBitmap = new Bitmap(lGridSize.Width, lGridSize.Height, lMeasurementGraphics))
+                using (var lBitmapGraphics = Graphics.FromImage(lBitmap))
+                {
+                    GridRenderer.DrawGrid(
+                        lBitmapGraphics, this.mStitchPatternControl.Grid,
+                        new Rectangle(Point.Empty, lGridSize), this.mStitchPatternControl.ThickLineFrequency);
+
+                    lBitmap.Save(@"C:\Temp\output.png", ImageFormat.Png);
+                }
+            }
+        }
     }
 }

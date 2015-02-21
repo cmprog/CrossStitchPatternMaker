@@ -51,6 +51,7 @@
     <Compile Include="CrossStitchCell.cs" />
     <Compile Include="CrossStitchGrid.cs" />
     <Compile Include="CrossStitchPattern.cs" />
+    <Compile Include="Drawing\GridRenderer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StitchMarker.cs" />
